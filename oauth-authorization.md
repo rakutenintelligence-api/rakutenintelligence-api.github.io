@@ -8,7 +8,7 @@ This document describes how to use OAuth to get authorization to access a partic
 
 ## Provisioning on Slice
 
-In order to receive OAuth access tokens on our partner-dev environment, simply click “Sign up for OAuth” on [our developer portal](https://developer.slice.com). We will provide you with a client id (GUID) and client secret. Please ensure that the client secret is stored in a secure manner.
+In order to receive OAuth access tokens on our partner-dev environment, simply click "Sign up for OAuth" on [our developer portal](https://developer.slice.com). We will provide you with a client id (GUID) and client secret. Please ensure that the client secret is stored in a secure manner.
 
 Before getting started, log in to the developer portal and enter the URL for Slice to redirect back to at the end of the authorization flow. For security reasons this is the only URL that Slice will redirect to and it must match the **redirect_uri** parameter in the authorization steps detailed below.
 
@@ -22,7 +22,7 @@ The URL for the authorization page is https://api.slice.com/oauth/authorize and 
 
 *   **client_id:** the client ID (GUID) assigned by Slice.
 
-*   **response_type:** the expected response type. Currently the only supported value is “code”.
+*   **response_type:** the expected response type. Currently the only supported value is "code".
 
 *   **redirect_uri:** the URL that Slice will redirect back to after authorization is complete. Must be HTTPS, and must match the redirect_uri you have registered with Slice.
 
@@ -108,7 +108,7 @@ Please make sure to store the access and refresh tokens in a secure manner and i
 
 If you are using OAuth 2.0, you need to include the following request header on all API calls:
 
-*   **Authorization: **a valid OAuth 2.0 request token that authorizes you to access data for a specific user. The token itself should have the “Bearer” prefix.
+*   **Authorization: **a valid OAuth 2.0 request token that authorizes you to access data for a specific user. The token itself should have the "Bearer" prefix.
 
 A typical authorization header will look like this:
 

@@ -12,8 +12,8 @@ title: Rakuten Intelligence API Docs
 - [FAQ]({{ '/faq' }})
 
 ## SDK's
-Listed below are our currently supported SDK’s. If you would like for us to support a release on a specific platform, feel free to contact us.
+Listed below are our old SDK’s, just as a reference.
 
-- node.js
-- Ruby
-- iOS Sample Code
+- [Node](https://github.com/slicedev/slice-node)
+- [Ruby](https://github.com/slicedev/slice-ruby)
+- [iOS](https://github.com/slicedev/slice-ios)

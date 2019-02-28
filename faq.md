@@ -7,17 +7,17 @@ menu: main
 
 ## Common Error Messages/Behavior for OAuth
 
-**Q: Why did I receive the following error message: The client you are attempting to give access to is not authorized by Slice. Please contact the developer?**
+**Q: Why did I receive the following error message: The client you are attempting to give access to is not authorized by Rakuten Intelligence. Please contact the developer?**
 
 A: This message indicates that you have not been confirmed as a valid user. Please check the redirect_uri parameter to ensure it’s set to the correct value (https://developers.google.com/oauthplayground for our 'Quick Hello World’, or to your oauth callback URL).
 
-## Common Error Messages for White-Label
+## Common Error Messages for Server-Side
 
 **Q: Why does the link_mailbox URL send me to the Slice login page?**
 
 A: Your request token may not be URL safe. Try requesting another token by using api/v1/actions/login. If you still experience this behavior please contact us and the Slice API Team will resolve the situation.
 
-**Q: What’s the easiest way to debug my white-label code?**
+**Q: What’s the easiest way to debug my server-side code?**
 
 A: Simply download our command-line tool and use your credentials to populate the appropriate fields.
 
@@ -51,7 +51,7 @@ Example: https://api.slice.com/api/v1/orders?expand=items,shipments
 
 ## Syntax for Filtering through response data
 
-**Q: I have a very specific query for the Slice API, is it possible to sort or remove some of the extraneous response data?**
+**Q: I have a very specific query for the Rakuten Intelligence API, is it possible to sort or remove some of the extraneous response data?**
 
 A: Yes, it is. We’ve implemented some of the OData filter specification, and the supported features are as follows:
 
@@ -69,14 +69,14 @@ These strings should be called with the filter URL query parameter in the same m
 
 **Q: I’d like to be able to view my results in a particular order. Would there be any way to ensure that?**
 
-A: You can sort the results returned from the Slice API by passing the orderBy URL query parameter. This parameter uses the same language as our filtering to display the API response in a particular way.
+A: You can sort the results returned from the Rakuten Intelligence API by passing the orderBy URL query parameter. This parameter uses the same language as our filtering to display the API response in a particular way.
 
 Example : https://api.slice.com/api/v1/orders?orderBy="purchaseDate desc, description asc, orderTax add ShippingCost"
 
 ## Method to uniquely identify request
 
-**Q: I need to contact the Slice API Team, but I don’t have any way of identifiying the API request I’m experiencing issues with. Is there a way I can do so?**
+**Q: I need to contact the Rakuten Intelligence API Team, but I don’t have any way of identifiying the API request I’m experiencing issues with. Is there a way I can do so?**
 
-A: You can send the reqId URL parameter with a GUID for your Slice API requests. Then, simply include the reqId for the request you have questions about to our team, and we’ll take it from there!
+A: You can send the reqId URL parameter with a GUID for your Rakuten Intelligence API requests. Then, simply include the reqId for the request you have questions about to our team, and we’ll take it from there!
 
 Example : https://api.slice.com/api/v1/users/self?reqId=2dk23j-2383jvhb-12i3jgh3

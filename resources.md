@@ -28,7 +28,7 @@ Unless otherwise noted, all resources are in the context of a specific user, who
 
 PUT/POST/DELETE requests must be sent with the body in querystring notation. They are available for the following resources:
 
-- /api/v1/users (for white-label integrations)
+- /api/v1/users (for server-side integrations)
 - /api/v1/orders
 - /api/v1/items
 - /api/v1/shipments
@@ -36,7 +36,7 @@ PUT/POST/DELETE requests must be sent with the body in querystring notation. The
 
 # Users
 
-The “users” resources contain meta-information about a Slice users has authorized the sharing of their data with a specific partner.
+The "users" resources contain meta-information about a Slice users has authorized the sharing of their data with a specific partner.
 
 ## Usage
 Since the two Slice authorization methods differ at the user level, usage of these resources differs between the two authorization methods.
@@ -51,7 +51,7 @@ The user object corresponding to the exact user identified by a valid OAuth toke
 This resource is accessible by GET.
 
 ### White-label Authorization
-If you are using white-label authorization, you have access to the following resources:
+If you are using server-side authorization, you have access to the following resources:
 
 **/api/v1/users**
 
@@ -59,7 +59,7 @@ This is a collection resource representing all users that have registered throug
 
 - since: only return those resources that have been created or modified since some particular timestamp (expressed as milliseconds since the UNIX epoch)
 
-When called with POST, it causes our system to register a new user. The details of the user should be specified as URL parameters matching the field names below (under “Object Model”).
+When called with POST, it causes our system to register a new user. The details of the user should be specified as URL parameters matching the field names below (under "Object Model").
 
 **/api/v1/users/self?username={username}**
 
@@ -67,7 +67,7 @@ This is an instance resource representing the user object for a specific user, a
 
 When called with GET, it returns a JSON-formatted object.
 
-When called with PUT, it causes our system to update the user identified by the URL. The details of the user should be specified as URL parameters matching the field names below (under “Object Model”).
+When called with PUT, it causes our system to update the user identified by the URL. The details of the user should be specified as URL parameters matching the field names below (under "Object Model").
 
 When called with DELETE, it causes our system to delete the user identified by the URL. Use this with caution, as we will also delete all mailboxes and extracted data associated with that user!
 
@@ -130,8 +130,8 @@ A mailbox object is expressed as a JSON object having the following fields:
 - description: A description of the code
 - updateTime: the time at which the mailbox was last updated, in milliseconds since the UNIX epoch.
 - href: a link to the instance resource for this mailbox.
-- user: a link to the “users” resource for the user to whom this mailbox belongs.
-- provider: a link to the “mailproviders” resource identifying the provider that hosts this mailbox.
+- user: a link to the "users" resource for the user to whom this mailbox belongs.
+- provider: a link to the "mailproviders" resource identifying the provider that hosts this mailbox.
 - email: the email address for this mailbox.
 
 Below is a description of each status along with their meanings:
@@ -185,7 +185,7 @@ The response looks like the following:
     }
 
 # Orders
-The “orders” resources contain order-level information for a particular user.
+The "orders" resources contain order-level information for a particular user.
 
 ## Usage
 The following resources are available to all partners, in the context of a specific user:
@@ -196,18 +196,18 @@ This is a collection resource that contains all order information for the contex
 When called with GET, it returns a JSON-formatted list and may be refined with the following optional URL parameters:
 
 - since: only return those resources that have been created or modified since some particular timestamp (expressed as milliseconds since the UNIX epoch).
-- showDeleted: if true, include those resources that have been marked as deleted. (Note that we will only show the “href” field for these resources.).
-- limit: do not include more than this number of resources (this is used along with “offset” to facilitate pagination).
-- offset: skip this many resources from the start of the list (this is used along with “limit” to facilitate pagination).
+- showDeleted: if true, include those resources that have been marked as deleted. (Note that we will only show the "href" field for these resources.).
+- limit: do not include more than this number of resources (this is used along with "offset" to facilitate pagination).
+- offset: skip this many resources from the start of the list (this is used along with "limit" to facilitate pagination).
 
-When called with POST, it causes our system to record a new order. The details of the order should be specified as URL parameters matching the field names below (under “Object Model”).
+When called with POST, it causes our system to record a new order. The details of the order should be specified as URL parameters matching the field names below (under "Object Model").
 
 **/api/v1/orders/{order_id}**
 This is an instance resource that represents a particular order.
 
 When called with GET, it returns a JSON-formatted object.
 
-When called with PUT, it causes our system to update the order identified by the URL. The details of the order should be specified as URL parameters matching the field names below (under “Object Model”).
+When called with PUT, it causes our system to update the order identified by the URL. The details of the order should be specified as URL parameters matching the field names below (under "Object Model").
 
 When called with DELETE, it causes our system to delete the order identified by the URL.
 
@@ -215,19 +215,19 @@ When called with DELETE, it causes our system to delete the order identified by 
 An order object is expressed as a JSON object having the following fields:
 
 - orderTitle: a string description of the order
-- merchant: a link to the “merchants” dictionary resource corresponding to the merchant where this order was placed
+- merchant: a link to the "merchants" dictionary resource corresponding to the merchant where this order was placed
 - updateTime: the time at which the order was last updated, in milliseconds since the UNIX epoch.
 - shipmentEmails: a JSON-formatted array of URL’s to different emails
-- shipments: array of links to “shipments” resources for any shipments associated with this order.
-- purchaseType: a link to the “purchasetypes” dictionary resource that identifies the type of this purchase.
+- shipments: array of links to "shipments" resources for any shipments associated with this order.
+- purchaseType: a link to the "purchasetypes" dictionary resource that identifies the type of this purchase.
 - orderNumber: the merchant’s order number, if available
-- items: array of links to “items” resources for the items in this order.
+- items: array of links to "items" resources for the items in this order.
 - orderTotal: the total value of the order, expressed as an integer (e.g. 395 means $3.95).
 - shippingCost: the cost of shipping the order, expressed as an integer.
 - orderTax: the total tax applied to the order, expressed as an integer.
-- orderEmails: an array of links to the “emails” resource for the order’s associated email.
+- orderEmails: an array of links to the "emails" resource for the order’s associated email.
 - href: a link to the instance resource for this order.
-- mailbox: a link to the “mailboxes” resource corresponding to the mailbox where this order was found (which in turn corresponds to a user)
+- mailbox: a link to the "mailboxes" resource corresponding to the mailbox where this order was found (which in turn corresponds to a user)
 - orderDate: the date the order was placed.
 - The response looks like the following:
 
@@ -326,17 +326,17 @@ This is a collection resource that contains all of the items purchased by a part
 When called with GET, it returns a JSON-formatted list and may be refined with the following optional URL parameters:
 
 - since: only return those resources that have been created or modified since some particular timestamp(expressed as milliseconds since the UNIX epoch).
-- showDeleted: if true, include those resources that have been marked as deleted. (Note that we will only show the “href” field for these resources.)
-- limit: do not include more than this number of resources (this is used along with “offset” to facilitate pagination).
-- offset: skip this many resources from the start of the list (this is used along with “limit” to facilitate pagination).
-When called with POST, it causes our system to record a new item. The details of the item should be specified as URL parameters matching the field names below (under “Object Model”).
+- showDeleted: if true, include those resources that have been marked as deleted. (Note that we will only show the "href" field for these resources.)
+- limit: do not include more than this number of resources (this is used along with "offset" to facilitate pagination).
+- offset: skip this many resources from the start of the list (this is used along with "limit" to facilitate pagination).
+When called with POST, it causes our system to record a new item. The details of the item should be specified as URL parameters matching the field names below (under "Object Model").
 
 **/api/v1/items/{item_id}**
 This is an instance resource that represents a particular item.
 
 When called with GET, it returns a JSON-formatted item object.
 
-When called with PUT, it causes our system to update the item identified by the URL. The details of the item should be specified as URL parameters matching the field names below (under “Object Model”).
+When called with PUT, it causes our system to update the item identified by the URL. The details of the item should be specified as URL parameters matching the field names below (under "Object Model").
 
 When called with DELETE, it causes our system to delete the item identified by the URL.
 
@@ -344,13 +344,13 @@ When called with DELETE, it causes our system to delete the item identified by t
 An item object is expressed as a JSON object having the following fields:
 
 - category: Slice’s categorization for this item, an enum with the following fields:
-- href: a link to the “category” resource associated with this item.
+- href: a link to the "category" resource associated with this item.
 - name: the name of the category.
 - parsingConfidence: a number between 0 and 100 representing the parsed data’s confidence interval
 - updateTime: the time at which the item was last updated, in milliseconds since the UNIX epoch.
-- shipments: array of links to “shipments” resources associated with this item.
+- shipments: array of links to "shipments" resources associated with this item.
 - description: the description of the item from the email.
-- orderEmails: an array of links to “emails” resources associated with this item.
+- orderEmails: an array of links to "emails" resources associated with this item.
 - productCode: a reserved field for a merchant-specific, unique identier for the product, null if not present.
 - purchaseDate: the date at which the item was purchased.
 - price: the price of this item, expressed as an integer (e.g. 395 means $3.95)
@@ -362,7 +362,7 @@ An item object is expressed as a JSON object having the following fields:
 - href:a link to the instance resource for this item
 - returned: a boolean value set if item has been returned; default is ‘false’
 - returnByDate: the last day to return this item, if available.
-- shipmentEmails: an array of links to “emails” resources associated with the order’s “shipments” resources.
+- shipmentEmails: an array of links to "emails" resources associated with the order’s "shipments" resources.
 - imageUrl: a link to the image associated with this order.
 - quantity: the number of identical items in the order.
 - The response looks like the following:
@@ -414,18 +414,18 @@ This is a collection resource that contains all of the shipments that have been 
 When called with GET, it returns a JSON-formatted list and may be refined with the following optional URL parameters:
 
 - since: only return those resources that have been created or modified since some particular timestamp (expressed as milliseconds since the UNIX epoch).
-- showDeleted: if true, include those resources that have been marked as deleted. (Note that we will only show the “href” field for these resources.).
-- limit: do not include more than this number of resources (this is used along with “offset” to facilitate pagination).
-- offset: skip this many resources from the start of the list (this is used along with “limit” to facilitate pagination).
+- showDeleted: if true, include those resources that have been marked as deleted. (Note that we will only show the "href" field for these resources.).
+- limit: do not include more than this number of resources (this is used along with "offset" to facilitate pagination).
+- offset: skip this many resources from the start of the list (this is used along with "limit" to facilitate pagination).
 
-When called with POST, it causes our system to record a new shipment. The details of the shipment should be specified as URL parameters matching the field names below (under “Object Model”).
+When called with POST, it causes our system to record a new shipment. The details of the shipment should be specified as URL parameters matching the field names below (under "Object Model").
 
 ### /api/v1/shipments/{shipment_id}
 This is an instance resource that represents a particular shipment.
 
 When called with GET, it returns a JSON-formatted object representing the shipment.
 
-When called with PUT, it causes our system to update the shipment identified by the URL. The details of the shipment should be specified as URL parameters matching the field names below (under “Object Model”).
+When called with PUT, it causes our system to update the shipment identified by the URL. The details of the shipment should be specified as URL parameters matching the field names below (under "Object Model").
 
 When called with DELETE, it causes our system to delete the shipment identified by the URL.
 
@@ -454,10 +454,10 @@ A shipment object is represented as a JSON object having the following fields:
 - trackingUrl: the URL to track the shipment, if available.
 - shares: an array containing the list of users shipment has been shared with.
 - merchantTrackingUrl: a URL containing the merchant tracking info.
-- emails: an array containing links to the corresponding “emails” resources associated with the shipment.
+- emails: an array containing links to the corresponding "emails" resources associated with the shipment.
 - href: a link to the instance resource for this shipment.
 - shippingDate: a string representing the date the item was shipped, otherwise null.
-- items: array of links to “items” resources corresponding to the items in the shipment.
+- items: array of links to "items" resources corresponding to the items in the shipment.
 - shippingEstimate: the range of dates when the shipment may be shipped, if not already shipped.
     - minDate: the earliest date.
     - maxDate: the latest date.
@@ -621,7 +621,7 @@ The response looks like the following (sample data is truncated for brevity):
 There are two instance resources that you can use to look up the emails associated with an order or shipment.
 
 ## Usage
-We expose the meta-information of an email in the “emails” resource and it links to a sub-resource containing the actual relevant content from the email.
+We expose the meta-information of an email in the "emails" resource and it links to a sub-resource containing the actual relevant content from the email.
 
 **/api/v1/emails/{EMAIL_ID}**
 
@@ -631,7 +631,7 @@ This instance resource corresponds to an email message. It contains meta-informa
 The email is represented as a JSON object with the following fields:
 
 - from: the sender of the email
-- emailType: either “order” or “shipment”
+- emailType: either "order" or "shipment"
 - content: a link to the /api/v1/emails/{EMAIL_ID}/content resource containing either the body of the email or the attachment corresponding to the receipt, which may be HTML, text, PDF, or Word
 - to: the recipient of the email
 - href: a link to the instance resource for this email.
@@ -640,7 +640,7 @@ The email is represented as a JSON object with the following fields:
 
 **/api/v1/emails/{EMAIL_ID}/content**
 
-This is the “relevant content” of the email. If the receipt/shipment information was sent in an attachment with the original, we return the attachment itself with the appropriate Content-Type.
+This is the "relevant content" of the email. If the receipt/shipment information was sent in an attachment with the original, we return the attachment itself with the appropriate Content-Type.
 
 If the receipt/shipment information was in the body of the email, we return the body itself as HTML if available, otherwise we return it as plain text.
 
@@ -655,7 +655,7 @@ This resource represents the different categories of items that a user may have 
 It has the following fields:
 
 - href: a link to the instance resource for this category
-- name: the name of the category, e.g. “Home & Garden”
+- name: the name of the category, e.g. "Home & Garden"
 
 The response looks like the following (sample data is truncated for brevity):
 
@@ -690,7 +690,7 @@ It has the following fields:
 - domains: a list of internet domains that are all part of a larger company.
 href: a link to the instance resource for this provider.
 - preferred: whether or not this is the newest version of the provider’s service.
-- name: the name of the provider, e.g. “gmail”
+- name: the name of the provider, e.g. "gmail"
 - key: the key corresponding to the provider’s database entry.
 
 The response looks like the following (sample data is truncated for brevity):
@@ -699,7 +699,7 @@ The response looks like the following (sample data is truncated for brevity):
         "result" : [
             {
                 "domains" : [],
-                "href" : "https://api.slice.com/api/v1/providers/1”,
+                "href" : "https://api.slice.com/api/v1/providers/1",
                 "preferred" : true,
                 "name" : "Yahoo!",
                 "key"  : "yahoo"
@@ -735,7 +735,7 @@ This resource represents the different types of purchases.
 It has the following fields:
 
 - href: a link to the instance resource for this purchase-type.
-- name: the name of the purchase type, e.g. “Shippable Order”.
+- name: the name of the purchase type, e.g. "Shippable Order".
 
 The response looks like the following (sample data is truncated for brevity):
 
@@ -769,7 +769,7 @@ It has the following fields:
 
 - updateTime: the timestamp at which the shipper’s information was last updated, in milliseconds since the UNIX epoch.
 - href: a link to the instance resource for this shipper.
-- name: the name of the shipper, e.g. “FedEx”.
+- name: the name of the shipper, e.g. "FedEx".
 - logoUrl: a link to an image containing the shipper’s logo.
 
 The response looks like the following (sample data is truncated for brevity):
