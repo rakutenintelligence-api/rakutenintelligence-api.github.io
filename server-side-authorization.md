@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Server-Side Authentication
-permalink: /server-side-authentication/
+title: Server-Side Authorization
+permalink: /server-side-authorization/
 ---
 
 For this type of authorization, Slice will be provide you with an API key and you will generate a DSA public/private keypair. Enter ONLY the public key into the Slice developer portal.
@@ -23,7 +23,7 @@ If there is a user name on the request, the string used to generate the request 
 
 In addition, the following parameter should be included on every request URL:
 
-Note that in this type of authorization, you are responsible for helping your users link their mailboxes to Slice using the mailbox-management APIs.
+Note that in this type of authorization, you are responsible for helping your users link their mailboxes to Slice using the mailbox-management APIs. See also [Mailbox Management with Server-Side Authorization]({{ '/mailbox-management' }})
 
 # How to generate a public/private keypair?
 At a UNIX or Linux command-prompt, execute the following command to generate a private key:

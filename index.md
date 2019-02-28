@@ -3,9 +3,17 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: page
+title: Rakuten Intelligence API Docs
 ---
 
-# Rakuten Intelligence API Documentation
+## API Docs
+- [Resources]({{ '/resources' }})
+- [Authorization]({{ '/authorization' }})
+- [FAQ]({{ '/faq' }})
 
-- Resources
-- Authentication 
+## SDK's
+Listed below are our currently supported SDK’s. If you would like for us to support a release on a specific platform, feel free to contact us.
+
+- node.js
+- Ruby
+- iOS Sample Code

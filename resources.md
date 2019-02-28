@@ -2,22 +2,18 @@
 layout: page
 title: Resources
 permalink: /resources/
+menu: main
 ---
 
-Resources Overview
-Users
-Usage
-OAuth
-White-Label Auth
-Object Model
-Mailboxes
-Orders
-Items
-Shipments
-Merchants
-Email
-Dictionary
-Actions
+- [Users]({{ '#users' }})
+- [Mailboxes]({{ '#mailboxes' }})
+- [Orders]({{ '#orders' }})
+- [Items]({{ '#items' }})
+- [Shipments]({{ '#shipments' }})
+- [Merchants]({{ '#merchants' }})
+- [Email]({{ '#email' }})
+- [Static Resources]({{ '#static-resources' }})
+- [Actions]({{ '#actions' }})
 
 # Resources Overview
 There are two primary types of resources:
