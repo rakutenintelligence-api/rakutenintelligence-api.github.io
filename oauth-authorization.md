@@ -6,11 +6,7 @@ permalink: /oauth-authorization/
 
 This document describes how to use OAuth to get authorization to access a particular user’s Slice data, and then how to authorize each subsequent API request with an OAuth access token.
 
-## Provisioning on Slice
-
-In order to receive OAuth access tokens on our partner-dev environment, simply click "Sign up for OAuth" on [our developer portal](https://developer.slice.com). We will provide you with a client id (GUID) and client secret. Please ensure that the client secret is stored in a secure manner.
-
-Before getting started, log in to the developer portal and enter the URL for Slice to redirect back to at the end of the authorization flow. For security reasons this is the only URL that Slice will redirect to and it must match the **redirect_uri** parameter in the authorization steps detailed below.
+Rakuten Intelligence should have provided you with a client ID and client secret. Please ensure that the client secret is stored in a secure manner.
 
 ## Getting Authorization from the User
 
@@ -21,11 +17,8 @@ This section describes the steps for integrating with our OAuth pages to get aut
 The URL for the authorization page is https://api.slice.com/oauth/authorize and takes the following parameters (all are required unless otherwise noted):
 
 *   **client_id:** the client ID (GUID) assigned by Slice.
-
 *   **response_type:** the expected response type. Currently the only supported value is "code".
-
 *   **redirect_uri:** the URL that Slice will redirect back to after authorization is complete. Must be HTTPS, and must match the redirect_uri you have registered with Slice.
-
 *   **state:** (optional) an arbitrary string that will be included in the response to your application.
 
 ## Slice login/signup/authorization UI
@@ -37,7 +30,6 @@ If the user is currently logged in to Slice, we will redirect them to the page t
 If the user has authorized your app to access their Slice data, we will redirect the browser to the URL client specified in the original **redirect_uri** parameter, and will add the following parameters to the URL:
 
 *   **code:** a short-lived authorization code that you can use to get access and refresh tokens (described below)
-
 *   **state:** the same **state** parameter that was passed in step 1, if not empty
 
 For example, if the redirect URL was https://www.myclient.com/callback, Slice would redirect to:
@@ -49,13 +41,9 @@ If the user did not authorize your app to access their data, we will redirect to
 Errors are passed on the redirect URL using the following parameters:
 
 *   **error:** a short form of the error name, one of the following:
-
     *   **access_denied:** user did not authorize your app to access their Slice data
-
     *   **unsupported_response_type:** if a response type is specified that Slice does not support
-
     *   **invalid_request:** if the original request is missing a required parameter, or a parameter has an invalid value
-
 *   **error_description:** a long-form description of the error. Not always available.
 
 For example, an error URL might look like this:
@@ -69,30 +57,22 @@ In the previous section, you obtained a short-lived authorization code. This cod
 To get access and refresh tokens for this user, make a POST request to https://api.slice.com/oauth/token with the following parameters:
 
 *   **client_id:** client id (GUID) assigned by Slice
-
 *   **client_secret:** client secret assigned by Slice
-
 *   **grant_type:** one of the following, depending on the case:
-
     *   **authorization_code:** if you don’t have tokens already, but you have an authorization code
-
     *   **refresh_token:** if you already have a refresh token and want to renew it and the access token
-
 *   **code:** the authorization code (omit if using a refresh token)
-
 *   **redirect_uri****:** the redirect URL specified in the authorization request (omit if using a refresh token)
-
 *   **refresh_token:** the refresh token (omit if using an authorization code)
 
 If the request is received in time (before the authorization code expires) and is valid in all aspects, you will receive a successful response containing a JSON object similar to the following:
 
-<pre>    {
+    {
         "access_token": "b0575a44c66b21a8a6d7eb3f925ec97a",
         "expires_in": 3600,
         "token_type": "bearer",
         "refresh_token": "32e09c4a6c91cfbfd52e57d2eec43568"
     }
-</pre>
 
 If there is an error, you will receive an error response similar to the following:
 
