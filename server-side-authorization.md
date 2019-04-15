@@ -24,6 +24,9 @@ If there is a user name on the request, the string used to generate the request 
 Note that in this type of authorization, you are responsible for helping your users link their mailboxes to Rakuten Intelligence using the mailbox-management APIs. See also [Mailbox Management with Server-Side Authorization]({{ '/mailbox-management' }})
 
 # How to generate a public/private keypair?
+
+Note: if you're not able to run this, we can provide a standard Docker image and instructions to generate the keys.
+
 At a UNIX or Linux command-prompt, execute the following command to generate a private key:
 
     ssh-keygen -q -t dsa -b 1024 -f mykeypair
